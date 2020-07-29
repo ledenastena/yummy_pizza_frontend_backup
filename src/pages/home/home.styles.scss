@@ -1,0 +1,9 @@
+.homepage-container {
+  display: flex;
+  justify-content: center;
+  
+  .home-image {
+    width: 100%;
+    max-width: 800px;
+  }
+}

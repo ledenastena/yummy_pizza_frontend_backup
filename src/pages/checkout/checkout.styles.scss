@@ -1,0 +1,113 @@
+$textColor: #525252;
+$smallBtnColor: #2abbc6;
+
+.checkout-page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  .checkout-headings {
+    margin: 10px 0;
+    display: flex;
+    
+    .heading {
+      font-size: 18px;
+      font-weight: 300;
+    }
+  }
+
+  .img-column {
+    width: 40%;
+  }
+
+  .info-column {
+    width: 25%;
+  }
+  
+  .remove-column {
+    width: 10%;
+  }
+
+  .checkout-item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    font-size: 18px;
+    
+    .checkout-item-image {
+      height: 180px;
+      max-width: 220px;
+      
+      img {
+        height: 100%;
+      }
+    }
+    
+    .checkout-item-trash {
+      font-size: 20px;
+      color: $textColor;
+      cursor: pointer;
+    }
+    
+    .checkout-item-quantity {
+      display: flex;    
+      align-items: center;
+      justify-content: center;
+
+      .small-btn {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        cursor: pointer;
+        font-size: 18px;
+        width: 20px;
+        height: 20px;
+        color: white;
+        background-color: $smallBtnColor;
+        border-radius: 4px;
+        margin: 0 7px;
+        -webkit-user-select: none; /* Safari */
+        -ms-user-select: none; /* IE 10+ and Edge */
+        user-select: none; /* Standard syntax */
+      }
+
+      .display-quantity {
+        width: 30px;
+        font-size: 16px;
+        text-align: center;
+        padding: 5px 0;
+        cursor: default;
+      }
+    }
+  }
+
+  .checkout-total {
+    display: flex;
+    justify-content: flex-end;
+    margin: 30px 0;
+    font-size: 24px;
+    
+    .text {
+      width: 25%;
+    }
+    
+    .total-price {
+      width: 25%;
+    }
+  }
+
+  .form-wrapper {
+    margin: 20px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .empty-cart-message {
+    font-size: 22px;
+    margin: 50px auto;
+  }
+}
