@@ -47,7 +47,7 @@ class SingleProduct extends React.Component {
     
     return (
       <div className='single-product-container'>              
-          <img className='list-image' src={`${image}`} />
+          <img className='list-image' src={`${image}`} alt='prodict-image' />
           <span className='item-title'>{ item.name }</span>
           {
            ( selectedCurrency === 'eur' )?
