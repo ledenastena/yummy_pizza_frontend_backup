@@ -1,5 +1,3 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ### This is a backup version of Yummy Pizza front-end
 
 Had to resort to using create-react-app at the last moment.
