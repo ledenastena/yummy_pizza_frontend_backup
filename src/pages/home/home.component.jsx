@@ -9,7 +9,7 @@ class HomePage extends React.Component {
     return (
       <div className='homepage-container'>
         <Link to='/products'>
-          <img src={ `src/assets/pizza_bg.png` } className='home-image' alt='pizza-background' />
+          <img src={ require('../../assets/pizza_bg.png') } className='home-image' alt='pizza-background' />
         </Link>
       </div>
     );

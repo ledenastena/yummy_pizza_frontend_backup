@@ -38,7 +38,7 @@ class CheckoutPage extends React.Component {
             <div key={ index } className='checkout-item-container'>
               <div className='img-column'>
                 <div className='checkout-item-image'>
-                  <img src={`src/assets/${ cartItem.image_url }`} alt='product'/>
+                  <img src={ require( `../../assets/${ cartItem.image_url }` ) } alt='product'/>
                 </div>
               </div>
               <div className='checkout-item-quantity info-column'>

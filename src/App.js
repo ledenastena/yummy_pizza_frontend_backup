@@ -14,7 +14,7 @@ class App extends React.Component {
   hashCode = ( str = '') => {
     let hash = 0;
 
-    if (str.length == 0) {
+    if (str.length === 0) {
         return hash;
     }
     for (let i = 0; i < str.length; i++) {
@@ -26,8 +26,6 @@ class App extends React.Component {
 }
 
   render() {
-    const { types } = this.props;
-
     return(
       <div className='app-container'>
         <Header />

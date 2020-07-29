@@ -50,7 +50,7 @@ class CartDropdown extends React.Component {
               { cartItems.map((cartItem, index) => (
                 <div key={index} className='cart-item-container'>
                   <div className='cart-item-image img-column'>
-                    <img src={`src/assets/${cartItem.image_url}`} alt='product'/>
+                    <img src={ require( `../../assets/${cartItem.image_url}` ) } alt='product'/>
                   </div>
                   <div className='cart-item-quantity info-column'>x{cartItem.quantity}</div>
                 </div>
