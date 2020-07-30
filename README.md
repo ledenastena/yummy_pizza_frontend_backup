@@ -29,4 +29,8 @@ So when a user requests certan type of products in the front-end we fetch the co
 
 The user can add products to cart and checkout with contact details. The cart contnent is persisted so the user doesn't lose the products if the page is refreshed.
 
+<<<<<<< HEAD
 The checkout confirmation leads the user back to the homepage.
+=======
+The checkout confirmation leads the user back to the homepage.
+>>>>>>> 0459b5730867b5b8177693c6951e159200fc22ba
