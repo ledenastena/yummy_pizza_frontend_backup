@@ -8,8 +8,6 @@ import ProductsPage from './pages/products/products.component';
 import CheckoutPage from './pages/checkout/checkout.component';
 
 class App extends React.Component {
-  componentDidMount() {
-  }
 
   hashCode = ( str = '') => {
     let hash = 0;
@@ -46,7 +44,5 @@ class App extends React.Component {
     );
   }
 }
-
-
 
 export default App;

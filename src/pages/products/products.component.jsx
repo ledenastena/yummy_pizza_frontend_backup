@@ -63,4 +63,4 @@ const mapDispatchToProps = ( dispatch ) => ({
   fetchTypesStartAsync: ( typeParam ) => dispatch( fetchTypesStartAsync( typeParam ))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductsPage);
+export default connect( mapStateToProps, mapDispatchToProps )( ProductsPage );

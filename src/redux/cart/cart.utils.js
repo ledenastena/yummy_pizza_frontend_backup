@@ -58,3 +58,9 @@ export const increaseProductQuantity = (cartItems, item) => {
     }
   });
 }
+
+export const getRate = ( shippingRates ) => {
+  let rates =  shippingRates.find( rate => rate.name === 'Standard rate');  
+
+  return rates;
+}

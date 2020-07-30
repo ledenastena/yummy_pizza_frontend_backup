@@ -11,7 +11,7 @@ class SingleProduct extends React.Component {
   
   handleChange = ( e ) => {
     this.setState({
-      quantity: e.target.value
+      quantity: parseInt( e.target.value )
     });
   }
 
@@ -30,7 +30,7 @@ class SingleProduct extends React.Component {
   }
   handleAddToCartClick = () => {    
     const { addProductToCart, toggleCartVisible, item } = this.props;
-    let quantity = this.state.quantity;
+    const quantity = this.state.quantity;
     
     if ( quantity > 0 ) {
       addProductToCart({ item, quantity });

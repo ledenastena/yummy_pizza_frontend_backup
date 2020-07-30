@@ -32,12 +32,12 @@ class CartDropdown extends React.Component {
   
   render() {
     const { cartItems, selectedCurrency } = this.props;
-    let cartTotal = '';
+    let cartTotal = 0;
 
     if ( selectedCurrency === 'eur' ) {
-      cartTotal = cartItems.reduce((acc, item) => ( acc + item.price_eur * item.quantity ), 0).toFixed( 2 );
+      cartTotal = cartItems.reduce((acc, item) => ( acc + parseFloat( item.price_eur ) * item.quantity ), 0);
     } else {
-      cartTotal = cartItems.reduce((acc, item) => ( acc + item.price_usd * item.quantity ), 0).toFixed( 2 );
+      cartTotal = cartItems.reduce((acc, item) => ( acc + parseFloat( item.price_usd ) * item.quantity ), 0);
     }
     
     return (
@@ -60,8 +60,8 @@ class CartDropdown extends React.Component {
               <div className='text'>Total:</div>
               { 
                 selectedCurrency === 'eur' ? 
-                <div className='total-price'>&euro;  { cartTotal }</div>
-                : <div className='total-price'>$  { cartTotal }</div>
+                <div className='total-price'>&euro;  { cartTotal.toFixed( 2 ) }</div>
+                : <div className='total-price'>$  { cartTotal.toFixed( 2 ) }</div>
               }
             </div>
             <div className='checkout-button-container'>

@@ -1,28 +1,38 @@
 import React from 'react';
 import './checkout.styles.scss';
-import { selectCartItems, selectCartVisible } from '../../redux/cart/cart.selectors';
+import { selectCartItems, selectCartVisible, selectShippingRate, selectFetchingShippingRates } from '../../redux/cart/cart.selectors';
 import { selectCurrency } from '../../redux/product/product.selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import CheckoutForm from '../../components/checkout-form/checkout-form.component';
-import { clearProductFromCart, toggleCartVisible, decreaseProductQuantity, increaseProductQuantity } from '../../redux/cart/cart.actions';
+import { clearProductFromCart, toggleCartVisible, decreaseProductQuantity, increaseProductQuantity, fetchShippingRatesStartAsync } from '../../redux/cart/cart.actions';
 import { connect } from 'react-redux';
 
 class CheckoutPage extends React.Component {
   componentDidMount() {
+    const { fetchShippingRatesStartAsync } = this.props;
+
     if (this.props.cartVisible) {
       this.props.toggleCartVisible();
     }
+
+    fetchShippingRatesStartAsync();
   }
   
   render(){
-    const { cartItems, clearProductFromCart, decreaseProductQuantity, increaseProductQuantity, selectedCurrency } = this.props;
-    let cartTotal = '';
-
+    const { cartItems, clearProductFromCart, decreaseProductQuantity, increaseProductQuantity, selectedCurrency, shippingRate, fetchingShippingRates } = this.props;
+    let cartTotal = 0;
+    
     if ( selectedCurrency === 'eur' ) {
-      cartTotal = cartItems.reduce(( acc, item ) => ( acc + item.price_eur * item.quantity ), 0 ).toFixed( 2 );
+      cartTotal = cartItems.reduce(( acc, item ) => ( acc + parseFloat( item.price_eur ) * item.quantity ), 0 );
+      if (!fetchingShippingRates) {
+        cartTotal += parseFloat( shippingRate.amount_eur );
+      }
     } else {
-      cartTotal = cartItems.reduce(( acc, item ) => (acc + item.price_usd * item.quantity ), 0 ).toFixed( 2 );
+      cartTotal = cartItems.reduce(( acc, item ) => (acc + parseFloat( item.price_usd ) * item.quantity ), 0 );
+      if (!fetchingShippingRates) {
+        cartTotal += parseFloat( shippingRate.amount_usd );
+      }
     }
 
     if (cartItems.length) {
@@ -44,17 +54,15 @@ class CheckoutPage extends React.Component {
               <div className='checkout-item-quantity info-column'>
                 <div className='small-btn minus-quantity' onClick={ () => decreaseProductQuantity( cartItem ) }>-</div>
                 <input className='display-quantity' value={ cartItem.quantity } readOnly />
-                <div className='small-btn plus-quantity' onClick={ () => increaseProductQuantity(cartItem) }>+</div>
+                <div className='small-btn plus-quantity' onClick={ () => increaseProductQuantity( cartItem ) }>+</div>
               </div>
                 { 
                   selectedCurrency === 'eur' ? 
                   <div className='checkout-item-price info-column'>
-                    &euro;  { ( cartItem.price_eur * cartItem.quantity ).toFixed( 2 ) }
+                    &euro;  { ( parseFloat( cartItem.price_eur ) * cartItem.quantity ).toFixed( 2 ) }    
                   </div>
                   : <div className='checkout-item-price info-column'>
-                      <div className='total-price'>
-                        $  { ( cartItem.price_usd * cartItem.quantity ).toFixed( 2 ) }
-                      </div>
+                    $  { ( parseFloat( cartItem.price_usd ) * cartItem.quantity ).toFixed( 2 ) }
                     </div>
                 }
               <div className='checkout-item-trash remove-column'>
@@ -62,9 +70,30 @@ class CheckoutPage extends React.Component {
               </div>
             </div>
           ))}
+          <div className='shipping-rate'>
+            <div className='text'>+ delivery:</div>
+            <div className='amount'>
+              { 
+                !fetchingShippingRates ?
+
+                    selectedCurrency === 'eur' ? 
+                    <span>&euro; { shippingRate.amount_eur }</span>  
+                    : <span>$  { shippingRate.amount_usd }</span> 
+
+                : 'loading...'
+              }
+            </div>
+            <div className='remove-column' />
+          </div>
           <div className='checkout-total'>
             <div className='text'>Total:</div>
-            <div className='total-price'>${cartTotal}</div>
+            <div className='total-price'>
+            { 
+                selectedCurrency === 'eur' ? 
+                <span>&euro; { cartTotal.toFixed( 2 ) }</span>  
+                : <span>$  { cartTotal.toFixed( 2 ) }</span>
+            }
+            </div>
             <div className='remove-column' />
           </div>
           <div className='form-wrapper'>
@@ -87,14 +116,17 @@ class CheckoutPage extends React.Component {
 const mapStateToProps = (state) => ({
   cartItems: selectCartItems(state),
   selectedCurrency: selectCurrency(state),
-  cartVisible: selectCartVisible(state)
+  cartVisible: selectCartVisible(state),
+  shippingRate: selectShippingRate(state),
+  fetchingShippingRates: selectFetchingShippingRates(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  clearProductFromCart: (payload) => dispatch(clearProductFromCart(payload)),
-  toggleCartVisible: (payload) => dispatch(toggleCartVisible(payload)),
-  decreaseProductQuantity: (payload) => dispatch(decreaseProductQuantity(payload)),
-  increaseProductQuantity: (payload) => dispatch(increaseProductQuantity(payload))
+  clearProductFromCart: ( payload ) => dispatch( clearProductFromCart(payload) ),
+  toggleCartVisible: ( payload ) => dispatch( toggleCartVisible(payload) ),
+  decreaseProductQuantity: ( payload ) => dispatch( decreaseProductQuantity(payload) ),
+  increaseProductQuantity: ( payload ) => dispatch( increaseProductQuantity(payload) ),
+  fetchShippingRatesStartAsync: () => dispatch( fetchShippingRatesStartAsync() )
 });
 
 export default connect( mapStateToProps, mapDispatchToProps )( CheckoutPage );

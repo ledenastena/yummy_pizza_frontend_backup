@@ -1,68 +1,34 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+### This is a backup version of Yummy Pizza front-end
 
-In the project directory, you can run:
+Had to resort to using create-react-app at the last moment.
+I was coding with manual webpack configuration the whole time but ran into problems when trying
+to deploy to Heroku and was running out of time.
 
-### `npm start`
+I am not happy with this result but some solution is better than none.
+The functionality is all there but my goal was to manage the configuration myself instead of relying on create react app.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Since this is a quick fix, this repository doesn't have significant commit history, if you want to see the repository that I was working on up to this point following Git Flow branching see: 
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+https://github.com/ledenastena/yummy_pizza_frontend
 
-### `npm test`
+### The App
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+App workflow is straightforward, when a page that displays products is visited, the data is fetched through an API:
 
-### `npm run build`
+https://yummypizza-api.herokuapp.com/api/
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This is where our data resides and is available online. 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+When we want all of the products displayed we simply fetch:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+https://yummypizza-api.herokuapp.com/api/products
 
-### `npm run eject`
+When we want specific type of products we need to pass the id parameter to the API. To make a more realistic and dynamic workflow we get this parameter from the backend where it lives in a separate table of product type ids. 
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+So when a user requests certan type of products in the front-end we fetch the corresponding product type id from the backend and then fetch products with the required value of id. This requires two API calls with the second one dependent of the result from the first one. To implement this kind of logic Redux Thunk is used.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The user can add products to cart and checkout with contact details. The cart contnent is persisted so the user doesn't lose the products if the page is refreshed.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The checkout confirmation leads the user back to the homepage.

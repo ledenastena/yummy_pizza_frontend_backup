@@ -84,6 +84,21 @@ $smallBtnColor: #2abbc6;
     }
   }
 
+  .shipping-rate {
+    display: flex;
+    justify-content: flex-end;
+    margin: 30px 0;
+    font-size: 16px;
+    
+    .text {
+      width: 25%;
+    }
+    
+    .amount {
+      width: 25%;
+    }
+  }
+
   .checkout-total {
     display: flex;
     justify-content: flex-end;
